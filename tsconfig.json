@@ -10,7 +10,9 @@
     "moduleResolution": "node", // 使用 Node 的模块解析
     "baseUrl": "./", // 设置基础路径
     "paths": {
-      "@/*": ["src/*"] // 配置路径别名
+      "@/*": ["src/*"], // 配置路径别名
+      "~components/*": ["src/components/*"],
+      "~hooks/*": ["src/hooks/*"]
     }
   },
   "include": ["src/**/*.tsx", "src/**/*.ts"], // 包含的文件夹
