@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { setInputValue, addItem, deleteItem, editItem, TodoActionTypes  } from '../store/actions';
+import { setInputValue, addItem, deleteItem, editItem, TodoActionTypes  } from '@/store/actions';
 
 const useTodoLogic = () => {
   const dispatch: Dispatch<TodoActionTypes> = useDispatch();
