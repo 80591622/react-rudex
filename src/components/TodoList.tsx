@@ -1,5 +1,6 @@
 import React from "react";
 import { Input, Button, List, Avatar } from "antd";
+import "@/styles/todo-list.css"
 
 interface TodoListProps {
   inputValue: string;

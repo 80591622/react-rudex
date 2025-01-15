@@ -1,0 +1,57 @@
+/* todoList.css */
+
+/* 父容器样式 */
+.todo-list-container {
+  display: flex;
+  flex-direction: column;  /* 垂直排列 */
+  align-items: center;      /* 水平居中 */
+  justify-content: center; /* 列表开始的位置 */
+  height: 100vh;            /* 使容器占满整个视口高度 */
+  padding: 20px;
+}
+
+/* 输入框的样式 */
+.todo-list-input {
+  width: 300px;             /* 设置输入框的宽度 */
+  margin-bottom: 10px;       /* 输入框和按钮之间的间距 */
+}
+
+/* 按钮的样式 */
+.todo-list-button {
+  width: 100px;             /* 设置按钮的宽度 */
+  margin-bottom: 20px;      /* 按钮和列表之间的间距 */
+}
+
+/* 列表容器样式 */
+.todo-list-container .ant-list {
+  width: 100%;              /* 列表占满父容器的宽度 */
+  max-width: 600px;         /* 设置最大宽度 */
+  margin-top: 20px;         /* 列表与按钮之间的间距 */
+}
+
+/* 每个列表项的样式 */
+.todo-list-container .ant-list-item {
+  margin-bottom: 10px;      /* 每个列表项之间的间距 */
+  border-radius: 8px;       /* 设置圆角 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 为每个列表项添加阴影 */
+}
+
+/* 设置 List Item 中 Avatar 的大小 */
+.todo-list-container .ant-list-item-meta-avatar {
+  width: 40px;
+  height: 40px;
+}
+
+/* 设置 List Item 标题的样式 */
+.todo-list-container .ant-list-item-meta-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 设置 List Item 描述的样式 */
+.todo-list-container .ant-list-item-meta-description {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}

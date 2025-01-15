@@ -1,5 +1,5 @@
 import React from "react";
-import TodoList from "./TodoList";
+import TodoList from "@/components/TodoList";
 import useTodoLogic from "@/hooks/useTodoLogic";
 
 const TodoListContainer: React.FC = () => {

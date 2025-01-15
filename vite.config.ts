@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'), // 将 @ 指向 src 文件夹
+      '~components': path.resolve(__dirname, 'src/components'), // 示例：自定义别名
       '~utils': path.resolve(__dirname, 'src/utils'), // 示例：自定义别名
       '~hooks': path.resolve(__dirname, 'src/hooks'),
     },
