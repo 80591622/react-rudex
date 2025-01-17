@@ -4,25 +4,29 @@ import "@/styles/todo-list.css"
 
 interface TodoListProps {
   inputValue: string;
-  list: (string | number)[];
+  inputDescValue: string;
+  todos:  { id: number; title: string; description: string; completed: boolean }[];
   editingIndex: number | null;
-  editedValue: string | number;
+  editedValues: { title: string; description: string };
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onInputChangeDescription: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onSubmit: () => void;
   onDelete: (index: number) => void;
   onEdit: (index: number) => void;
   onSave: (index: number) => void;
   onCancel: () => void;
-  onEditedValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onEditedValueChange: (field: "title" | "description", value: string) => void;
 }
 
 const TodoList: React.FC<TodoListProps> = ({
   inputValue,
-  list,
+  todos,
   editingIndex,
-  editedValue,
+  editedValues,
+  inputDescValue,
   onInputChange,
+  onInputChangeDescription,
   onKeyDown,
   onSubmit,
   onDelete,
@@ -40,19 +44,27 @@ const TodoList: React.FC<TodoListProps> = ({
         onChange={onInputChange}
         onKeyDown={onKeyDown}
       />
+
+      <Input
+        className="todo-list-input"
+        placeholder="Enter task description"
+        value={inputDescValue}
+        onChange={onInputChangeDescription}
+      />
+
       <Button className="todo-list-button" type="primary" onClick={onSubmit}>
         提交
       </Button>
 
       <List
         itemLayout="horizontal"
-        dataSource={list}
+        dataSource={todos}
         renderItem={(item, index) => (
           <List.Item
             actions={[
-              editingIndex === index ? (
+              editingIndex === item.id ? (
                 <>
-                  <Button type="link" onClick={() => onSave(index)}>
+                  <Button type="link" onClick={() => onSave(item.id)}>
                     确定
                   </Button>
                   <Button type="link" onClick={onCancel}>
@@ -60,11 +72,11 @@ const TodoList: React.FC<TodoListProps> = ({
                   </Button>
                 </>
               ) : (
-                <Button type="link" onClick={() => onEdit(index)}>
+                <Button type="link" onClick={() => onEdit(item.id)}>
                   编辑
                 </Button>
               ),
-              <Button type="link" onClick={() => onDelete(index)}>
+              <Button type="link" onClick={() => onDelete(item.id)}>
                 删除
               </Button>,
             ]}
@@ -76,13 +88,22 @@ const TodoList: React.FC<TodoListProps> = ({
                 />
               }
               title={
-                editingIndex === index ? (
-                  <Input value={editedValue} onChange={onEditedValueChange} />
+                editingIndex === item.id ? (
+                  <Input value={editedValues.title} onChange={(e) => onEditedValueChange("title", e.target.value)} />
                 ) : (
-                  <a href="https://ant.design">{item}</a>
+                  <a href="https://ant.design">{item.title}</a>
                 )
               }
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              description={
+                editingIndex === item.id ? (
+                  <Input
+                    value={editedValues.description}
+                    onChange={(e) => onEditedValueChange("description", e.target.value)}
+                  />
+                ) : (
+                  item.description
+                )
+              }
             />
           </List.Item>
         )}

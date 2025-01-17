@@ -1,59 +1,104 @@
 import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { setInputValue, addItem, deleteItem, editItem, TodoActionTypes  } from '@/store/actions';
+import { RootState } from "@/store";
+import { fetchTodos } from '@/store/actions';
+import { setInputValue, setInputDescValue, addItem, deleteItem, editItem, TodoActionTypes  } from '@/store/actions';
+import { selectTodos, selectLoading, selectError } from './selectors';
 
 const useTodoLogic = () => {
-  const dispatch: Dispatch<TodoActionTypes> = useDispatch();
+  const dispatch: Dispatch<any> = useDispatch();
   const inputValue = useSelector((state: { inputValue: string }) => state.inputValue);
-  const list = useSelector((state: { list: (string | number)[] }) => state.list);
+  const inputDescValue = useSelector((state: { inputDescValue: string }) => state.inputDescValue);
+  const todos = useSelector(selectTodos); 
+  // const loading = useSelector(selectLoading);
+  // const error = useSelector(selectError);
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [editedValue, setEditedValue] = useState<string | number>("");
+  const [editedValues, setEditedValues] = useState<{ title: string | number; description: string | number }>({
+    title: "",
+    description: "",
+  });
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log('Todos updated:', todos); // 查看 todos 是否更新
+  }, [todos]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setInputValue(e.target.value));
   };
 
+  const handleInputChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setInputDescValue(e.target.value));
+  };
+
   const handleSubmit = () => {
-    if (inputValue.trim() !== "") {
-      dispatch(addItem(inputValue));
-      dispatch(setInputValue(""));
+    if (inputValue.trim() !== "" && inputDescValue.trim() !== "") {
+      // 假设 id 是递增的
+      const newItem = {
+        id: Math.random(), // 或者使用某种递增机制
+        title: inputValue,
+        description: inputDescValue, // 默认空描述
+        completed: false,
+      };
+      dispatch(addItem(newItem)); // 将新项传递给 Redux
+      dispatch(setInputValue("")); // 清空输入框
+      dispatch(setInputDescValue("")); // 清空输入框
     }
   };
 
-  const handleDelete = (index: number) => {
-    dispatch(deleteItem(index));
+  const handleDelete = (id: number) => {
+    dispatch(deleteItem(id));
   };
 
-  const handleEdit = (index: number) => {
-    setEditedValue(list[index]);
-    setEditingIndex(index);
+  const handleEdit = (id: number) => {
+    const todo = todos.find((todo) => todo.id === id);
+    if (todo) {
+      setEditingIndex(id);
+      setEditedValues({ title: todo.title, description: todo.description });
+    }
   };
 
-  const handleSave = (index: number) => {
-    if (editedValue !== "") {
-      dispatch(editItem(index, editedValue));
-      setEditingIndex(null);
+  const handleSave = (id: number) => {
+    if (editingIndex === id) {
+      dispatch(editItem(id, editedValues.title, editedValues.description ));  // 保存编辑后的数据
+      setEditingIndex(null);  // 重置编辑状态
+      setEditedValues({ title: "", description: "" });  // 清空编辑值
     }
   };
 
   const handleCancel = () => {
     setEditingIndex(null);
+    setEditedValues({ title: "", description: "" });
+  };
+
+  const handleEditedValueChange = (field: "title" | "description", value: string) => {
+    setEditedValues((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   return {
     inputValue,
-    list,
+    inputDescValue,
+    todos,
     editingIndex,
-    editedValue,
-    setEditedValue,
+    editedValues,
+    setEditedValues,
     handleInputChange,
+    handleInputChangeDescription,
     handleSubmit,
     handleDelete,
     handleEdit,
     handleSave,
     handleCancel,
+    handleEditedValueChange 
   };
 };
 

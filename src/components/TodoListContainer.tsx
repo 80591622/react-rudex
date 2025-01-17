@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TodoList from "@/components/TodoList";
 import useTodoLogic from "@/hooks/useTodoLogic";
 
 const TodoListContainer: React.FC = () => {
   const {
     inputValue,
-    list,
+    inputDescValue,
+    todos,
     editingIndex,
-    editedValue,
-    setEditedValue,
+    editedValues,
+    setEditedValues,
     handleInputChange,
+    handleInputChangeDescription,
+    handleEditedValueChange,
     handleSubmit,
     handleDelete,
     handleEdit,
@@ -20,10 +23,15 @@ const TodoListContainer: React.FC = () => {
   return (
     <TodoList
       inputValue={inputValue}
-      list={list}
+      inputDescValue={inputDescValue}
+      todos={todos}
       editingIndex={editingIndex}
-      editedValue={editedValue}
+      editedValues={{ 
+        title: String(editedValues.title), // 确保是字符串类型
+        description: String(editedValues.description), // 确保是字符串类型
+      }}
       onInputChange={handleInputChange}
+      onInputChangeDescription={handleInputChangeDescription}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           handleSubmit();
@@ -34,7 +42,7 @@ const TodoListContainer: React.FC = () => {
       onEdit={handleEdit}
       onSave={handleSave}
       onCancel={handleCancel}
-      onEditedValueChange={(e) => setEditedValue(e.target.value)}
+      onEditedValueChange={handleEditedValueChange}
     />
   );
 };
