@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import TodoList from "@/components/TodoList";
 import useTodoLogic from "@/hooks/useTodoLogic";
 
@@ -6,7 +5,7 @@ const TodoListContainer: React.FC = () => {
   const {
     inputValue,
     inputDescValue,
-    todos,
+    todos= [],
     editingIndex,
     editedValues,
     handleInputChange,

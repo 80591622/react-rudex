@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { AppThunk } from "@/store/todos/store";
 import { fetchTodosApi } from '@/api/todolist';
 
 export const SET_INPUT_VALUE = "SET_INPUT_VALUE";
@@ -71,7 +72,7 @@ export const setError = (error: string | null) => ({
   payload: error,
 });
 
-export const fetchTodos = () => {
+export const fetchTodos = (): AppThunk => {
   return async (dispatch: Dispatch) => {
     dispatch(setLoading(true)); // 开始加载
 

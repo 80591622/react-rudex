@@ -12,9 +12,9 @@ interface TodoListProps {
   onInputChangeDescription: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onSubmit: () => void;
-  onDelete: (index: number) => void;
-  onEdit: (index: number) => void;
-  onSave: (index: number) => void;
+  onDelete: (id: number) => void;
+  onEdit: (id: number) => void;
+  onSave: (id: number) => void;
   onCancel: () => void;
   onEditedValueChange: (field: "title" | "description", value: string) => void;
 }

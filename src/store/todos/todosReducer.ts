@@ -36,7 +36,7 @@ const todosReducer = (state = initialState, action: TodoActionTypes): TodoState 
     case DELETE_ITEM:
       return {
         ...state,
-        todos:  (state.todos ?? []).filter((_, id) => id !== action.payload)
+        todos:  (state.todos ?? []).filter(item => item.id !== action.payload)
       }
     case EDIT_ITEM:
       return {

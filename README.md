@@ -119,4 +119,10 @@ export default thunk;
 ```
 
 
+1. 什么是 Redux-saga？
+2. Redux-saga 的模型概念是什么？
+3. 在 Redux-saga 中 call() 和 put() 之间有什么区别？
+4. Redux-saga 和 Redux-thunk 之间有什么区别？
+
+
 

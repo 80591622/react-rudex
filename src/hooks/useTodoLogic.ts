@@ -1,13 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from 'react';
 import { useState } from "react";
-import { Dispatch } from "redux";
-import { RootState } from "@/store";
+import { RootState, AppDispatch  } from "@/store/todos/store";
 import { fetchTodos } from '@/store/todos/actions';
 import { setInputValue, setInputDescValue, addItem, deleteItem, editItem  } from '@/store/todos/actions';
 
 const useTodoLogic = () => {
-  const dispatch: Dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const inputValue = useSelector((state: { inputValue: string }) => state.inputValue);
   const inputDescValue = useSelector((state: { inputDescValue: string }) => state.inputDescValue);
   const todos = useSelector((state: RootState) => state.todos); 
@@ -15,7 +14,7 @@ const useTodoLogic = () => {
   // const error = useSelector(selectError);
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [editedValues, setEditedValues] = useState<{ title: string | number; description: string | number }>({
+  const [editedValues, setEditedValues] = useState<{ title: string; description: string}>({
     title: "",
     description: "",
   });
@@ -55,7 +54,7 @@ const useTodoLogic = () => {
   };
 
   const handleEdit = (id: number) => {
-    const todo = todos.find((todo) => todo.id === id);
+    const todo = todos?.find((todo) => todo.id === id);
     if (todo) {
       setEditingIndex(id);
       setEditedValues({ title: todo.title, description: todo.description });
