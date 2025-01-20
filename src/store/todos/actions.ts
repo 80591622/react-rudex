@@ -6,12 +6,10 @@ export const SET_INPUT_DESC_VALUE = "SET_INPUT_DESC_VALUE"
 export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const EDIT_ITEM = "EDIT_ITEM";
-export const EDIT_DESC_ITEM = "EDIT_DESC_ITEM"
 export const SET_TODOS = "SET_TODOS";
 export const SET_LOADING = "SET_LOADING";
 export const SET_ERROR = "SET_ERROR";
 
-// 定义基础 Action 接口
 interface Action<T extends string, P> {
   type: T;
   payload: P;
@@ -22,16 +20,14 @@ export type SetInputValueAction = Action<typeof SET_INPUT_VALUE, string>;
 export type SetInputDescValueAction = Action<typeof SET_INPUT_DESC_VALUE, string>;
 export type AddItemAction = Action<typeof ADD_ITEM, { id: number; title: string; description: string; completed: boolean }>;
 export type DeleteItemAction = Action<typeof DELETE_ITEM, number | number[]>;
-export type EditItemAction = Action<typeof EDIT_ITEM, { id: number; title: string }>;
-export type EditDescItemAction = Action<typeof EDIT_DESC_ITEM, { id: number; description: string }>;
+export type EditItemAction = Action<typeof EDIT_ITEM, { id: number; title: string; description: string; }>;
 
-// 定义 SetTodosAction, SetLoadingAction, SetErrorAction 类型
 export type SetTodosAction = Action<typeof SET_TODOS, any[]>;
 export type SetLoadingAction = Action<typeof SET_LOADING, boolean>;
 export type SetErrorAction = Action<typeof SET_ERROR, string | null>;
 
 // 合并所有 Action 类型
-export type TodoActionTypes = SetInputValueAction | SetInputDescValueAction | AddItemAction | DeleteItemAction | EditItemAction | EditDescItemAction | SetTodosAction | SetLoadingAction | SetErrorAction;
+export type TodoActionTypes = SetInputValueAction | SetInputDescValueAction | AddItemAction | DeleteItemAction | EditItemAction | SetTodosAction | SetLoadingAction | SetErrorAction;
 
 // Action creators
 export const setInputValue = (value: string): SetInputValueAction => ({
@@ -49,12 +45,12 @@ export const addItem = (item: { id: number; title: string; description: string; 
   payload: item,
 });
 
-export const deleteItem = (id: number | number[]): DeleteItemAction => ({
+export const deleteItem = (id: number): DeleteItemAction => ({
   type: DELETE_ITEM,
   payload: id,
 });
 
-export const editItem = (id: number, title: string | number,description: string | number ) => ({
+export const editItem = (id: number, title: string,description: string ) => ({
   type: EDIT_ITEM,
   payload: { id, title, description }
 });

@@ -3,15 +3,14 @@ import React, { useEffect } from 'react';
 import { useState } from "react";
 import { Dispatch } from "redux";
 import { RootState } from "@/store";
-import { fetchTodos } from '@/store/actions';
-import { setInputValue, setInputDescValue, addItem, deleteItem, editItem, TodoActionTypes  } from '@/store/actions';
-import { selectTodos, selectLoading, selectError } from './selectors';
+import { fetchTodos } from '@/store/todos/actions';
+import { setInputValue, setInputDescValue, addItem, deleteItem, editItem  } from '@/store/todos/actions';
 
 const useTodoLogic = () => {
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch: Dispatch = useDispatch();
   const inputValue = useSelector((state: { inputValue: string }) => state.inputValue);
   const inputDescValue = useSelector((state: { inputDescValue: string }) => state.inputDescValue);
-  const todos = useSelector(selectTodos); 
+  const todos = useSelector((state: RootState) => state.todos); 
   // const loading = useSelector(selectLoading);
   // const error = useSelector(selectError);
 
@@ -39,11 +38,10 @@ const useTodoLogic = () => {
 
   const handleSubmit = () => {
     if (inputValue.trim() !== "" && inputDescValue.trim() !== "") {
-      // 假设 id 是递增的
       const newItem = {
-        id: Math.random(), // 或者使用某种递增机制
+        id: Math.random(), 
         title: inputValue,
-        description: inputDescValue, // 默认空描述
+        description: inputDescValue, 
         completed: false,
       };
       dispatch(addItem(newItem)); // 将新项传递给 Redux
@@ -90,7 +88,6 @@ const useTodoLogic = () => {
     todos,
     editingIndex,
     editedValues,
-    setEditedValues,
     handleInputChange,
     handleInputChangeDescription,
     handleSubmit,

@@ -1,6 +1,6 @@
 import { TodoActionTypes, SET_INPUT_VALUE, SET_INPUT_DESC_VALUE, ADD_ITEM, DELETE_ITEM, EDIT_ITEM, EDIT_DESC_ITEM } from './actions';
 import { SET_TODOS, SET_LOADING, SET_ERROR } from './actions';
-interface DefaultState {
+interface TodoState {
   inputValue: string;
   inputDescValue: string;
   todos?: Array<{ id: number; title: string; description: string; completed: boolean }>;
@@ -8,13 +8,13 @@ interface DefaultState {
   error?: string | null;
 }
 
-const defaultState: DefaultState = {
+const initialState: TodoState = {
   inputValue: '',
   inputDescValue: '',
   todos: []
 };
 
-const reducer = (state: DefaultState = defaultState, action: TodoActionTypes): DefaultState => {
+const todosReducer = (state = initialState, action: TodoActionTypes): TodoState => {
   console.log(action, state, "==========================>");
   
   switch (action.type) {
@@ -43,19 +43,10 @@ const reducer = (state: DefaultState = defaultState, action: TodoActionTypes): D
         ...state,
         todos: (state.todos ?? []).map(item =>
           item.id === action.payload.id
-            ? { ...item, title: action.payload.title } // 允许 value 为 string 或 number
+            ? { ...item, title: action.payload.title, description: action.payload.description } // 允许 value 为 string 或 number
             : item
         )
       }
-      case EDIT_DESC_ITEM:
-        return {
-          ...state,
-          todos: (state.todos ?? []).map(item =>
-            item.id === action.payload.id
-              ? { ...item, title: action.payload.description } // 允许 value 为 string 或 number
-              : item
-          )
-        }
       case SET_TODOS:
         return {
           ...state,
@@ -76,4 +67,4 @@ const reducer = (state: DefaultState = defaultState, action: TodoActionTypes): D
   }
 };
 
-export default reducer;
+export default todosReducer;

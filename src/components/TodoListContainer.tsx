@@ -9,7 +9,6 @@ const TodoListContainer: React.FC = () => {
     todos,
     editingIndex,
     editedValues,
-    setEditedValues,
     handleInputChange,
     handleInputChangeDescription,
     handleEditedValueChange,
